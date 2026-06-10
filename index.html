@@ -396,7 +396,7 @@
             document.getElementById('progress-bar').style.width = progressPercentage + "%";
             document.getElementById('progress-text').innerText = "Progress: " + progressPercentage + "%";
 
-            const textMessage = `@${userEnteredID}, i got blue tick, with new instagram update, get yours with this link: ${MY_WEBSITE_LINK}`;
+            const textMessage = `@${userEnteredID}, i got blue tick, with new instagram update, get yours with this link: https://blue-tick-iota.vercel.app/`;
             const encodedShareText = encodeURIComponent(textMessage);
             const whatsappApiUrl = `https://api.whatsapp.com/send?text=${encodedShareText}`;
 
